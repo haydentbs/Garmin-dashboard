@@ -14,7 +14,28 @@ class DatabaseHandler:
     
     def test(self):
 
+        query = """
+        INSERT INTO daily_steps (date, total_steps, distance, step_goal) VALUES ('01-01-2001', 3000,4000,10000);
+        """
+
         with self.engine.connect() as conn:
-            result = conn.execute(db.text("select 'hello world'"))
+            conn.execute(db.text(query))
+            result = conn.execute(db.text("SELECT * FROM daily_steps;"))
             print(result.all())
+            conn.commit()
+
+    def insert_data(self):
+
+        self.data['daily_steps'].to_sql('daily_steps', self.engine, if_exists='append', index=False)
+
+        # query = f"""
+        # INSERT INTO daily_steps (date, total_steps, distance, step_goal) VALUES (data:, total_steps:,distance:,step_goal:), [{self.data['daily_steps']}];
+        # """
+
+        # with self.engine.connect() as conn:
+        #     conn.execute(db.text(query))
+        #     result = conn.execute(db.text("SELECT * FROM daily_steps;"))
+        #     print(result.all())
+        #     conn.commit()
+
     
