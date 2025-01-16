@@ -1,1 +1,36 @@
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: garmin
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: garmin
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+     - app-network
 
+
+  # data_pull:
+  #   build:
+  #     context: ./garmin-data-data_pull
+  #   environment:
+  #     POSTGRES_HOST: db
+  #     POSTGRES_PORT: 5321
+  #     POSTGRES_DB: garmin
+  #     POSTGRES_PASSWORD: garmin
+  #     POSTGRES_USER: postgres
+  #   volumes:
+  #     - ./garmin-data_pull:/app
+  #   command: ["python", "-u", "main.py"]
+
+networks:
+  app-network:
+    driver: bridge
+
+# Add this volumes section at the bottom
+volumes:
+  pgdata:
