@@ -7,6 +7,8 @@ def garmin_initilise():
     email = os.getenv("GARMIN_EMAIL")
     password = os.getenv("GARMIN_PASSWORD")
 
+    
+
     garmin = garminconnect.Garmin(email, password)
     garmin.login()
 

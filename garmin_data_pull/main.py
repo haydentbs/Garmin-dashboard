@@ -36,7 +36,7 @@ def main():
     # print(Data.data['daily_steps'])
     # print(data['daily_steps'].keys())
 
-    Database = DatabaseHandler(db_config['database'], data, inside_container=True)
+    Database = DatabaseHandler(db_config, data, inside_container=True)
     # Database.test()
     Database.insert_data()
 

@@ -9,8 +9,19 @@ class DatabaseHandler:
     def create_connection(self, inside_container):
         db_url_container = f"postgresql://{self.db_config['user']}:{self.db_config['password']}@{self.db_config['host']}:{self.db_config['port']}/{self.db_config['database']}"
         db_url_outside = f"postgresql://{self.db_config['user']}:{self.db_config['password']}@localhost:{self.db_config['port']}/{self.db_config['database']}"
-
-        return db.create_engine(db_url_container if inside_container else db_url_outside)
+        
+        connection_url = db_url_container if inside_container else db_url_outside
+        print(f"Attempting to connect with URL: {connection_url}")
+        
+        try:
+            engine = db.create_engine(connection_url)
+            # Test the connection
+            with engine.connect() as conn:
+                print("Successfully connected to database!")
+            return engine
+        except Exception as e:
+            print(f"Failed to connect to database: {str(e)}")
+            raise
     
     def test(self):
 
