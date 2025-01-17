@@ -34,41 +34,79 @@ def create_connection(inside_container=True):
 
 engine = create_connection(inside_container=True)
 
+def calc_dates(time_period):
+
+    end_date = datetime.now().date()
+    
+    if time_period == '14days':
+        start_date = end_date - timedelta(days=14)
+    elif time_period == '30days':
+        start_date = end_date - timedelta(days=30)
+    elif time_period == '7days':
+        start_date = end_date - timedelta(days=7)
+    elif time_period == '90days':
+        start_date = end_date - timedelta(days=90)
+    elif time_period == '6months':
+        start_date = end_date - timedelta(days=180)
+    elif time_period == '1year':
+        start_date = end_date - timedelta(days=365)
+
+    start_date = start_date.strftime('%Y-%m-%d') # e.g., '2023-01-01'
+    end_date = end_date.strftime('%Y-%m-%d')      # e.g., '2023-01-10'
+
+    return start_date, end_date
+
+
+
 @app.route('/daily_steps', methods=['GET'])
 def get_daily_steps():
     try:
 
-        end_date = datetime.now().date()
-        start_date = end_date - timedelta(days=14)
+        # end_date = datetime.now().date()
+        # start_date = end_date - timedelta(days=14)
 
-        time_period = request.args.get('time_period', '14days')
-        end_date = datetime.now().date()
+        # time_period = request.args.get('time_period', '14days')
+        # end_date = datetime.now().date()
         
-        if time_period == '14days':
-            start_date = end_date - timedelta(days=14)
-        elif time_period == '30days':
-            start_date = end_date - timedelta(days=30)
-        elif time_period == '7days':
-            start_date = end_date - timedelta(days=7)
-        elif time_period == '90days':
-            start_date = end_date - timedelta(days=90)
-        elif time_period == '6months':
-            start_date = end_date - timedelta(days=180)
-        elif time_period == '1year':
-            start_date = end_date - timedelta(days=365)
+        # if time_period == '14days':
+        #     start_date = end_date - timedelta(days=14)
+        # elif time_period == '30days':
+        #     start_date = end_date - timedelta(days=30)
+        # elif time_period == '7days':
+        #     start_date = end_date - timedelta(days=7)
+        # elif time_period == '90days':
+        #     start_date = end_date - timedelta(days=90)
+        # elif time_period == '6months':
+        #     start_date = end_date - timedelta(days=180)
+        # elif time_period == '1year':
+        #     start_date = end_date - timedelta(days=365)
 
-        start_date = request.args.get('start_date', start_date.strftime('%Y-%m-%d'))  # e.g., '2023-01-01'
-        end_date = request.args.get('end_date', end_date.strftime('%Y-%m-%d'))      # e.g., '2023-01-10'
-        aggregation = request.args.get('aggregation', 'daily') 
+        # start_date = request.args.get('start_date', start_date.strftime('%Y-%m-%d'))  # e.g., '2023-01-01'
+        # end_date = request.args.get('end_date', end_date.strftime('%Y-%m-%d'))      # e.g., '2023-01-10'
+        # aggregation = request.args.get('aggregation', 'daily') 
+
+        start_date, end_date = calc_dates(request.args.get('time_period', '14days'))
         
-        query = f"""SELECT * FROM daily_steps WHERE date > '{start_date}' AND date < '{end_date}'"""
+        query = f"""SELECT * FROM daily_steps WHERE date > '{start_date}' AND date < '{end_date}' ORDER BY date asc"""
 
         df = pd.read_sql(query, engine)
         return jsonify(df.to_dict(orient='records'))
     
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+    
+@app.route('/activity_list', methods=['GET'])
+def get_activity_times():
+    try:
+        # start_date, end_date = calc_dates(request.args.get('time_period', '14days'))
+        
+        query = """ SELECT activityName, elapsedDuration, activityName FROM activity_list; """
+        df = pd.read_sql(query, engine)
+        return jsonify(df.to_dict(orient='records'))
 
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 
 if __name__ == '__main__':

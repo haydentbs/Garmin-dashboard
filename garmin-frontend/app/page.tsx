@@ -6,6 +6,7 @@ import StepChart from '@/components/StepChart';
 import DataControls, { TimeRange, AggregationType } from '@/components/DataControls';
 import styles from './page.module.css';
 import { StepData } from '@/types/steps';
+import ActivityChart from '@/components/ActivityChart'
 
 export default function Home() {
   const [stepData, setStepData] = useState<StepData[]>([]);
@@ -63,6 +64,18 @@ export default function Home() {
     );
   }
 
+  const activityData = [
+    {
+      date: "2024-03-01",
+      activities: {
+        running: 45,  // minutes
+        cycling: 120,
+        gym: 60
+      }
+    },
+    // ... more days
+  ];
+
   return (
     <div className={styles.wrapper}>
       <Header />
@@ -75,6 +88,7 @@ export default function Home() {
         />
         <div className={styles.chartContainer}>
           <StepChart data={stepData} />
+          <ActivityChart data={activityData} />
           
         </div>
       </main>

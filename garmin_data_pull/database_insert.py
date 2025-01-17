@@ -1,4 +1,5 @@
 import sqlalchemy as db
+import json
 
 class DatabaseHandler:
     def __init__(self, db_config, data, inside_container=True):
@@ -36,17 +37,16 @@ class DatabaseHandler:
             conn.commit()
 
     def insert_data(self):
+        # Option 1: Convert dictionaries to JSON strings
+        activity_df = self.data['activity_list'].copy()
+        for column in activity_df.columns:
+            if activity_df[column].apply(lambda x: isinstance(x, (dict, list))).any():
+                activity_df[column] = activity_df[column].apply(lambda x: json.dumps(x) if x is not None else None)
 
-        self.data['daily_steps'].to_sql('daily_steps', self.engine, if_exists='append', index=False)
+        # Insert the processed dataframe
+        activity_df.to_sql('activity_list', self.engine, if_exists='replace', index=False)
 
-        # query = f"""
-        # INSERT INTO daily_steps (date, total_steps, distance, step_goal) VALUES (data:, total_steps:,distance:,step_goal:), [{self.data['daily_steps']}];
-        # """
-
-        # with self.engine.connect() as conn:
-        #     conn.execute(db.text(query))
-        #     result = conn.execute(db.text("SELECT * FROM daily_steps;"))
-        #     print(result.all())
-        #     conn.commit()
+        # Original steps data should work fine as is
+        self.data['daily_steps'].to_sql('daily_steps', self.engine, if_exists='replace', index=False)
 
     
