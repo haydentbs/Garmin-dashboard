@@ -37,6 +37,7 @@ engine = create_connection(inside_container=True)
 @app.route('/daily_steps', methods=['GET'])
 def get_daily_steps():
     try:
+
         end_date = datetime.now().date()
         start_date = end_date - timedelta(days=14)
 
@@ -49,6 +50,8 @@ def get_daily_steps():
             start_date = end_date - timedelta(days=30)
         elif time_period == '7days':
             start_date = end_date - timedelta(days=7)
+        elif time_period == '90days':
+            start_date = end_date - timedelta(days=90)
         elif time_period == '6months':
             start_date = end_date - timedelta(days=180)
         elif time_period == '1year':

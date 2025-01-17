@@ -11,7 +11,7 @@ export default function Home() {
   const [stepData, setStepData] = useState<StepData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [timeRange, setTimeRange] = useState<TimeRange>('30days');
+  const [timeRange, setTimeRange] = useState<TimeRange>('7days');
   const [aggregationType, setAggregationType] = useState<AggregationType>('daily');
 
   useEffect(() => {
@@ -19,14 +19,16 @@ export default function Home() {
       try {
         setIsLoading(true);
         const response = await fetch(
-          `/api/daily_steps?range=${timeRange}&aggregation=${aggregationType}`
+          `/api/dailySteps?time_period=${timeRange}`
         );
+        console.log('Time Period: ' + timeRange)
         
         if (!response.ok) {
           throw new Error('Failed to fetch data');
         }
         
         const data = await response.json();
+        console.log(data)
         setStepData(data);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An error occurred');
@@ -36,6 +38,7 @@ export default function Home() {
     };
 
     fetchStepData();
+    
   }, [timeRange, aggregationType]);
 
   if (isLoading) {
@@ -72,6 +75,7 @@ export default function Home() {
         />
         <div className={styles.chartContainer}>
           <StepChart data={stepData} />
+          
         </div>
       </main>
     </div>

@@ -1,8 +1,16 @@
 import { NextResponse } from 'next/server';
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
-    const response = await fetch('http://localhost:5001/daily_steps', {
+    // Get the URL object from the incoming request
+    const { searchParams } = new URL(request.url);
+    const timePeriod = searchParams.get('time_period');
+    
+    // Construct the backend URL with the time_period parameter
+    const backendUrl = `http://localhost:5001/daily_steps?time_period=${timePeriod}`;
+    console.log('Fetching from backend:', backendUrl);
+
+    const response = await fetch(backendUrl, {
       headers: {
         'Content-Type': 'application/json',
       },
