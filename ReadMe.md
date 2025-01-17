@@ -9,7 +9,7 @@ This project consists of three main components:
 2. PostgreSQL Database: Stores activity data
 3. Frontend Dashboard: Visualizes the data using Next.js and Chart.js
 
-[Insert Screenshot of Dashboard Here]
+![Dashboard Screenshot](./images/dashboard.png)
 
 ## Architecture
 
