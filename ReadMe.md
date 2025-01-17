@@ -94,12 +94,13 @@ The application is containerized using Docker and consists of three services:
 
 ## Project Structure
 
+```
 ├── backend/ # Flask API service
 ├── database/ # Database initialization
 ├── garmin_data_pull/ # Garmin data fetching service
 ├── garmin-frontend/ # Next.js frontend application
 └── docker-compose.yaml # Docker composition file
-
+```
 
 ## Technologies Used
 
