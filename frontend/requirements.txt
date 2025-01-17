@@ -1,0 +1,7 @@
+pandas
+matplotlib
+sqlalchemy
+psycopg2
+python-dotenv
+dash
+plotly

@@ -1,0 +1,47 @@
+.controls {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  
+  .controlGroup {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .icon {
+    color: #00718d;
+    font-size: 1.2rem;
+  }
+  
+  .select {
+    padding: 0.5rem 2rem 0.5rem 1rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    background-color: #f8f9fa;
+    font-size: 0.9rem;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .select:hover {
+    border-color: #00718d;
+  }
+  
+  .select:focus {
+    outline: none;
+    border-color: #00718d;
+    box-shadow: 0 0 0 2px rgba(0, 113, 141, 0.1);
+  }
+  
+  @media (max-width: 768px) {
+    .controls {
+      flex-direction: column;
+    }
+  }

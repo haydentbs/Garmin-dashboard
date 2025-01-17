@@ -1,0 +1,69 @@
+.chartWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    height: 100%;
+    padding: 20px 0;
+    position: relative;
+  }
+  
+  .barContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    flex: 1;
+    margin: 0 10px;
+    position: relative;
+  }
+  
+  .bar {
+    width: 40px;
+    border-radius: 4px 4px 0 0;
+    transition: height 0.3s ease;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+  }
+  
+  .bar:hover {
+    opacity: 0.8;
+  }
+  
+  .bar:hover .tooltipContent {
+    display: block;
+  }
+  
+  .tooltipContent {
+    display: none;
+    position: absolute;
+    top: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    z-index: 1000;
+  }
+  
+  .tooltipContent p {
+    margin: 4px 0;
+  }
+  
+  .goalLine {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: #dc3545;
+    left: 0;
+  }
+  
+  .date {
+    margin-top: 10px;
+    font-size: 0.8rem;
+    color: #666;
+  }
