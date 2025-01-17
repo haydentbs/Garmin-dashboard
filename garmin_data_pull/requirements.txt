@@ -1,0 +1,7 @@
+numpy
+matplotlib
+pandas
+sqlalchemy
+psycopg2
+garminconnect
+python-dotenv

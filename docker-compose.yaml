@@ -14,18 +14,32 @@ services:
      - app-network
 
 
-  # data_pull:
-  #   build:
-  #     context: ./garmin-data-data_pull
-  #   environment:
-  #     POSTGRES_HOST: db
-  #     POSTGRES_PORT: 5321
-  #     POSTGRES_DB: garmin
-  #     POSTGRES_PASSWORD: garmin
-  #     POSTGRES_USER: postgres
-  #   volumes:
-  #     - ./garmin-data_pull:/app
-  #   command: ["python", "-u", "main.py"]
+  data_pull:
+    build:
+      context: ./garmin_data_pull
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: garmin
+      POSTGRES_PASSWORD: garmin
+      POSTGRES_USER: postgres
+    volumes:
+      - ./garmin_data_pull:/app
+    command: ["python", "-u", "main.py"]
+
+  api:
+    build:
+      context: ./backend
+    ports:
+     - "5001:5001"
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: garmin
+      POSTGRES_PASSWORD: garmin
+      POSTGRES_USER: postgres
+    networks:
+      - app-network
 
 networks:
   app-network:
