@@ -1,8 +1,0 @@
-*.env
-.DS_Store
-
-*.csv
-*.png
-.gitignore
-
-garmin_data_pull/garmin_initialisation.py
