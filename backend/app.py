@@ -100,7 +100,7 @@ def get_activity_times():
     try:
         # start_date, end_date = calc_dates(request.args.get('time_period', '14days'))
         
-        query = """ SELECT activityName, elapsedDuration, activityName FROM activity_list; """
+        query = """ SELECT a."activityName", a."elapsedDuration", a."activityName" FROM activity_list AS a; """
         df = pd.read_sql(query, engine)
         return jsonify(df.to_dict(orient='records'))
 

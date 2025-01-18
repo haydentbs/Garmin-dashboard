@@ -6,7 +6,7 @@ class DataPull():
 
     def __init__(self):
         self.garmin = garmin_initilise()
-        self.DATE_1 = datetime.strptime("2024-09-10", "%Y-%m-%d")
+        self.DATE_1 = datetime.strptime("2024-01-16", "%Y-%m-%d")
         self.DATE_2 = datetime.strptime("2025-01-16", "%Y-%m-%d")
         self.dates = self.split_dates()
 
