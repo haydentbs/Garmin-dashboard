@@ -22,16 +22,23 @@ def main():
     'port': '5432',
     'database': 'garmin'
     }
-    
-    # if os.path.exists('steps.csv'):
-    #     print('Valid csv path')
-    #     data = {}
-    #     data['daily_steps'] = pd.read_csv('steps.csv')
-       
-    # else:
     Data = DataPull()
-    Data.daily_steps() 
-    Data.activity_list()
+
+    if os.path.exists('steps.csv'):
+        print('Valid steps csv path')
+        Data.data['daily_steps'] = pd.read_csv('steps.csv')
+    else:
+        Data.daily_steps() 
+
+    if os.path.exists('activity_list.csv'):
+        print('Valid activity csv path')
+        Data.data['activity_list'] = pd.read_csv('activity_list.csv')
+    else:
+        Data.activity_list()     
+    # else:
+    
+    
+    
     
     data = Data.data
     # Data.daily_steps()

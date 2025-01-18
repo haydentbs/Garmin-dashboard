@@ -98,12 +98,14 @@ def get_daily_steps():
 @app.route('/activity_list', methods=['GET'])
 def get_activity_times():
     try:
-        # start_date, end_date = calc_dates(request.args.get('time_period', '14days'))
+        start_date, end_date = calc_dates(request.args.get('time_period', '14days'))
         
-        query = """ SELECT a."activityName", a."elapsedDuration", a."activityName" FROM activity_list AS a; """
+        query = f""" SELECT a."startTimeGMT", a."activityTypeName", a."elapsedDuration", a."activityName" FROM activity_list AS a WHERE a."startTimeGMT" > '{start_date}' AND a."startTimeGMT" < '{end_date}' ORDER BY a."startTimeGMT" asc; """
         df = pd.read_sql(query, engine)
         return jsonify(df.to_dict(orient='records'))
 
+   # SELECT a."activityTypeName", a."elapsedDuration", a."activityName" FROM activity_list AS a WHERE a."startTimeGMT" > '{start_date}' AND a."startTimeGMT" < '{end_date}' ORDER BY date asc; 
+   # """ SELECT a."startTimeGMT", a."activityTypeName", a."elapsedDuration", a."activityName" FROM activity_list AS a WHERE a."startTimeGMT" > '2024-10-01' AND a."startTimeGMT" < '2024-11-10' ORDER BY a."startTimeGMT" asc; """
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
