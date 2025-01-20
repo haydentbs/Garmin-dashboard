@@ -113,3 +113,7 @@ def get_activity_times():
 
 if __name__ == '__main__':
   app.run(host='0.0.0.0', port=5001)
+
+
+
+"""SELECT a."startTimeGMT", a."activityTypeName", a."elapsedDuration", a."activityName" FROM activity_list AS a WHERE a."startTimeGMT" > '2024-10-01' AND a."startTimeGMT" < '2024-11-10' ORDER BY a."startTimeGMT" asc GROUPBY a."startTimeGMT" ; """

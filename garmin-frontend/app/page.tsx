@@ -6,31 +6,29 @@ import StepChart from '@/components/StepChart';
 import DataControls, { TimeRange, AggregationType } from '@/components/DataControls';
 import styles from './page.module.css';
 import { StepData } from '@/types/steps';
+import { ActivityData } from '@/types/activity';
 import ActivityChart from '@/components/ActivityChart'
+import { fetchStepData, fetchActivityData } from '@/services/dataService';
 
 export default function Home() {
   const [stepData, setStepData] = useState<StepData[]>([]);
+  const [activityData, setActivityData] = useState<ActivityData[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [timeRange, setTimeRange] = useState<TimeRange>('7days');
   const [aggregationType, setAggregationType] = useState<AggregationType>('daily');
 
   useEffect(() => {
-    const fetchStepData = async () => {
+    const fetchData = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch(
-          `/api/dailySteps?time_period=${timeRange}`
-        );
-        console.log('Time Period: ' + timeRange)
+        const [steps, activities] = await Promise.all([
+          fetchStepData(timeRange),
+          fetchActivityData(timeRange)
+        ]);
         
-        if (!response.ok) {
-          throw new Error('Failed to fetch data');
-        }
-        
-        const data = await response.json();
-        console.log(data)
-        setStepData(data);
+        setStepData(steps);
+        setActivityData(activities);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An error occurred');
       } finally {
@@ -38,8 +36,7 @@ export default function Home() {
       }
     };
 
-    fetchStepData();
-    
+    fetchData();
   }, [timeRange, aggregationType]);
 
   if (isLoading) {
@@ -64,18 +61,6 @@ export default function Home() {
     );
   }
 
-  const activityData = [
-    {
-      date: "2024-03-01",
-      activities: {
-        running: 45,  // minutes
-        cycling: 120,
-        gym: 60
-      }
-    },
-    // ... more days
-  ];
-
   return (
     <div className={styles.wrapper}>
       <Header />
@@ -89,7 +74,6 @@ export default function Home() {
         <div className={styles.chartContainer}>
           <StepChart data={stepData} />
           <ActivityChart data={activityData} />
-          
         </div>
       </main>
     </div>
