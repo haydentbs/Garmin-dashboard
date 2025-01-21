@@ -116,4 +116,4 @@ if __name__ == '__main__':
 
 
 
-"""SELECT a."startTimeGMT", a."activityTypeName", a."elapsedDuration", a."activityName" FROM activity_list AS a WHERE a."startTimeGMT" > '2024-10-01' AND a."startTimeGMT" < '2024-11-10' ORDER BY a."startTimeGMT" asc GROUPBY a."startTimeGMT" ; """
+# """SELECT a."startTimeGMT", a."activityTypeName", a."elapsedDuration", a."activityName" FROM activity_list AS a WHERE a."startTimeGMT" > '2024-10-01' AND a."startTimeGMT" < '2024-11-10' ORDER BY a."startTimeGMT" asc GROUPBY a."startTimeGMT" ; """

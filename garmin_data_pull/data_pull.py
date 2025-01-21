@@ -111,28 +111,36 @@ class DataPull():
         return self.data['activity_list']
     
 
+    def get_user_details(self):
+
+        return None
+
+    
+
     
     def test(self):
         
-        df = pd.read_csv('activity.csv')
-        def is_dict_or_dict_string(x):
-            if isinstance(x, dict):
-                return True
-            if isinstance(x, str):
-                try:
-                    eval(x)
-                    return True
-                except:
-                    return False
-            return False
+        # df = pd.read_csv('activity.csv')
+        # def is_dict_or_dict_string(x):
+        #     if isinstance(x, dict):
+        #         return True
+        #     if isinstance(x, str):
+        #         try:
+        #             eval(x)
+        #             return True
+        #         except:
+        #             return False
+        #     return False
 
-        dict_cols = df.map(is_dict_or_dict_string).any()
-        dict_column_names = dict_cols[dict_cols].index
+        # dict_cols = df.map(is_dict_or_dict_string).any()
+        # dict_column_names = dict_cols[dict_cols].index
 
-        print("Columns containing dictionaries:", dict_column_names.tolist())
-        print(df.columns)
-        df.drop(columns=dict_column_names, inplace=True)
-        print(df.columns)
+        # print("Columns containing dictionaries:", dict_column_names.tolist())
+        # print(df.columns)
+        # df.drop(columns=dict_column_names, inplace=True)
+        # print(df.columns)
+     return None
+
 
     
 # beans = DataPull()
