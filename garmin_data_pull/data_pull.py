@@ -104,6 +104,7 @@ class DataPull():
         print(self.data['activity_list'].columns)
         self.data['activity_list'].drop(columns=dict_column_names, inplace=True)
         print(self.data['activity_list'].columns)
+        self.data['activity_list']['date'] = pd.to_datetime(self.data['activity_list']['startTimeLocal']).dt.date
 
 
         self.data['activity_list'].to_csv('activity_list.csv')
