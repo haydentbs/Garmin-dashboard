@@ -1,13 +1,15 @@
 from garmin_initialisation import garmin_initilise
 import pandas as pd
 from datetime import datetime, timedelta
+import numpy as np
 
 class DataPull():
 
     def __init__(self):
         self.garmin = garmin_initilise()
-        self.DATE_1 = datetime.strptime("2024-01-16", "%Y-%m-%d")
+        self.DATE_1 = datetime.strptime("2023-06-01", "%Y-%m-%d")
         self.DATE_2 = datetime.strptime("2025-01-16", "%Y-%m-%d")
+        self.DATE_2 = datetime.today()
         self.dates = self.split_dates()
 
         self.data = {}
@@ -105,6 +107,10 @@ class DataPull():
         self.data['activity_list'].drop(columns=dict_column_names, inplace=True)
         print(self.data['activity_list'].columns)
         self.data['activity_list']['date'] = pd.to_datetime(self.data['activity_list']['startTimeLocal']).dt.date
+
+        # location grouping
+        self.data['activity_list']['startLattitude_group'] = self.data['activity_list']['startLatitude'].apply(lambda x: None if pd.isna(x) else int(x/0.03)*0.03)
+        self.data['activity_list']['startLongditude_group'] = self.data['activity_list']['startLongitude'].apply(lambda x: None if pd.isna(x) else int(x/0.03)*0.03)
 
 
         self.data['activity_list'].to_csv('activity_list.csv')
