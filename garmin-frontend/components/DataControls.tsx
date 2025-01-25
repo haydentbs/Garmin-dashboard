@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import styles from './DataControls.module.css';
 import { FaCalendar, FaChartLine } from 'react-icons/fa';
 

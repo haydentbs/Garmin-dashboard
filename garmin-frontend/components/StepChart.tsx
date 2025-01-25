@@ -6,6 +6,7 @@ import {
   Title,
   Tooltip,
   Legend,
+  TooltipItem,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { StepData } from '@/types/steps';
@@ -56,7 +57,7 @@ const StepChart: React.FC<Props> = ({ data }) => {
       },
       tooltip: {
         callbacks: {
-          label: (context: any) => {
+          label: (context: TooltipItem<'bar'>) => {
             const dataPoint = data[context.dataIndex];
             return [
               `Steps: ${dataPoint.total_steps.toLocaleString()}`,

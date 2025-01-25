@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server';
+import { StepData } from '@/types/steps';
+
 
 export async function GET(request: Request) {
   try {
@@ -31,7 +33,7 @@ export async function GET(request: Request) {
     const data = JSON.parse(sanitizedText);
 
     // Clean the data
-    const cleanData = data.map((item: any) => ({
+    const cleanData = data.map((item: StepData) => ({
       date: item.date,
       distance: item.distance ?? 0,
       step_goal: item.step_goal ?? 10000,
