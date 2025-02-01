@@ -1,9 +1,10 @@
 import { StepData } from '@/types/steps';
 import { ActivityData } from '@/types/activity';
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001';
 
 export const fetchStepData = async (timeRange: string): Promise<StepData[]> => {
-  const response = await fetch(`/api/dailySteps?time_period=${timeRange}`);
+  const response = await fetch(`${API_BASE_URL}/daily_steps?time_period=${timeRange}`);
   console.log('Step Data: ', response)
   
   if (!response.ok) {
@@ -14,7 +15,7 @@ export const fetchStepData = async (timeRange: string): Promise<StepData[]> => {
 };
 
 export const fetchActivityData = async (timeRange: string): Promise<ActivityData[]> => {
-  const response = await fetch(`/api/activityList?time_period=${timeRange}`);
+  const response = await fetch(`${API_BASE_URL}/activity_list?time_period=${timeRange}`);
   console.log('Activity Data', response)
   
   if (!response.ok) {
