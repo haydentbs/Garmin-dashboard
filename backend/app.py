@@ -1,4 +1,6 @@
 from flask import Flask, jsonify, request
+from flask_cors import CORS
+from config import Config
 import sqlalchemy as db
 import pandas as pd
 import os
@@ -8,7 +10,8 @@ from datetime import datetime, timedelta
 # Load environment variables from .env file
 load_dotenv()
 
-app = Flask(__name__);
+app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": Config.CORS_ORIGINS}})
 
 # db_config = {
 #     'user': os.getenv('DB_USER'),
@@ -18,11 +21,11 @@ app = Flask(__name__);
 #     'database': os.getenv('DB_NAME')
 # }
 db_config = {
-    'user': 'postgres',
-    'password': 'garmin',
-    'host': 'db',  # This matches the service name in docker-compose
-    'port': '5432',
-    'database': 'garmin'
+    'user': Config.POSTGRES_USER,
+    'password': Config.POSTGRES_PASSWORD,
+    'host': Config.POSTGRES_HOST,
+    'port': Config.POSTGRES_PORT,
+    'database': Config.POSTGRES_DB
 }
 print(db_config)
 
@@ -110,6 +113,9 @@ def get_activity_times():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+@app.route('/health', methods=['GET'])
+def health_check():
+    return jsonify({'status': 'healthy'}), 200
 
 if __name__ == '__main__':
   app.run(host='0.0.0.0', port=5001)

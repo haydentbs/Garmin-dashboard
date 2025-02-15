@@ -1,0 +1,39 @@
+{
+    "family": "garmin-api",
+    "networkMode": "awsvpc",
+    "containerDefinitions": [
+      {
+        "name": "api",
+        "image": "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/garmin-api:latest",
+        "portMappings": [
+          {
+            "containerPort": 5001,
+            "protocol": "tcp"
+          }
+        ],
+        "environment": [
+          {
+            "name": "POSTGRES_HOST",
+            "value": "${RDS_ENDPOINT}"
+          },
+          {
+            "name": "POSTGRES_PORT",
+            "value": "5432"
+          },
+          {
+            "name": "POSTGRES_DB",
+            "value": "garmin"
+          }
+        ],
+        "secrets": [
+          {
+            "name": "POSTGRES_PASSWORD",
+            "valueFrom": "arn:aws:ssm:${AWS_REGION}:${AWS_ACCOUNT_ID}:parameter/garmin/db_password"
+          }
+        ]
+      }
+    ],
+    "requiresCompatibilities": ["FARGATE"],
+    "cpu": "256",
+    "memory": "512"
+  }
